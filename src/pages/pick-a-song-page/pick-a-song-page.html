@@ -1,0 +1,22 @@
+<!--
+  Generated template for the PickASongPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title><img src="../assets/kirby.gif"/>Pick a Song!</ion-title>
+   
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<ion-list>
+<ion-item *ngFor = "let song of songArray">
+   <button ion-button [clear]="true" (click) ="startSong(song)">
+  <h1>{{song}}</h1>
+ </button>
+</ion-item>
+</ion-list>
+</ion-content>
