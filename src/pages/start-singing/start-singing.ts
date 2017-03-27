@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import {ResultsPage} from '../pages/results/results';
 import { MediaPlugin } from 'ionic-native';
 import {Platform} from "ionic-angular/index";
+import { Http } from '@angular/http';
 
 /*
   Generated class for the StartSinging page.
@@ -15,51 +16,63 @@ import {Platform} from "ionic-angular/index";
   templateUrl: 'start-singing.html'
 })
 export class StartSingingPage {
-
+ 
+ media: MediaPlugin; 
  title: string
- media = new MediaPlugin('../assets/Dio.wav');
-audio = new AudioRecorder;
 
- startRecordings(){
-    this.media.startRecord()
+  constructor(public http: Http,public alertCtrl: AlertController,public platform: Platform,public navCtrl: NavController, public navParams: NavParams) {
+   this.title  = this.navParams.get('title');}
+
+  ionViewDidLoad() {}
+  ionViewDidEnter(){
+    this.media = new MediaPlugin('../Library/NoCloud/recording.wav');
+  }
+
+  showAlert(message) {
+  let alert = this.alertCtrl.create({
+    title: 'Error',
+    subTitle: message,
+    buttons: ['OK']
+  });
+  alert.present();
 }
 
-  constructor(public platform: Platform,public navCtrl: NavController, public navParams: NavParams) {
-    this.title  = this.navParams.get('title');
-    
-    
+//../assets/Dio.wav
+startRecording(){
+  try {
+    this.media.startRecord();
   }
-
-  ionViewDidLoad() {
-    this.audio.startPlayback();
-  }
-
-}
-export class AudioRecorder {
-  mediaPlugin: MediaPlugin = null;
-
-  get MediaPlugin(): MediaPlugin {
-    if (this.mediaPlugin == null) {
-      this.mediaPlugin = new MediaPlugin('../assets/Dio.wav');
-      console.log(this.mediaPlugin + "Testing this")
-    }
-
-    return this.mediaPlugin;
-  }
-
-  startRecording() {
-    this.MediaPlugin.startRecord();
-  }
-
-  stopRecording() {
-    this.MediaPlugin.stopRecord();
-  }
-
-  startPlayback() {
-    this.MediaPlugin.play();
-  }
-
-  stopPlayback() {
-    this.MediaPlugin.stop();
+  catch (e) {
+    this.showAlert('Could not start recording.');
   }
 }
+
+stopRecording() {
+  try {
+    this.media.stopRecord();
+  }
+  catch (e) {
+    this.showAlert('Could not stop recording.');
+  }
+}
+
+startPlayback() {
+  try {
+    this.media.play();
+  }
+  catch (e) {
+    this.showAlert('Could not play recording.');
+  }
+}
+
+stopPlayback() {
+  try {
+    this.media.stop();
+  }
+  catch (e) {
+    this.showAlert('Could not stop playing recording.');
+  }
+}
+
+}
+

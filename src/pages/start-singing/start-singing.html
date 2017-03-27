@@ -9,10 +9,20 @@
   <ion-navbar>
     <ion-title>Start Singing!</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-
+<p>
+  <button ion-button (click)="startRecording()">Start recording</button>
+</p>
+<p>
+  <button ion-button (click)="stopRecording()">Stop recording</button>
+</p>
+<p>
+  <button ion-button (click)="startPlayback()">Start playback</button>
+</p>
+<p>
+  <button ion-button (click)="stopPlayback()">Stop playback</button>
+</p>
 </ion-content>
