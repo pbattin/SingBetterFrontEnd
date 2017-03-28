@@ -19,7 +19,7 @@ import { File } from '@ionic-native/file';
   providers: [File, Transfer]
 })
 export class StartSingingPage {
- notes: any = 1;
+ accuracy: any = 0;
  media: MediaPlugin; 
  title: string;
 
@@ -43,12 +43,31 @@ upload() {
      
   }
 
-  fileTransfer.upload('cdvfile://localhost/persistent/../Library/NoCloud/recording.wav', 'https://singbetter.herokuapp.com/uploadFile', options, true)
+if(this.title == 'Holy Diver'){
+  fileTransfer.upload('cdvfile://localhost/persistent/../Library/NoCloud/recording.wav', 'https://singbetter.herokuapp.com/holyDiver', options, true)
    .then((data) => {
-    this.notes = data.response;
+    this.accuracy = data.response;
    }, (err) => {
      // error
    })
+}
+else if(this.title == 'Smells Like Teen Spirit'){
+  fileTransfer.upload('cdvfile://localhost/persistent/../Library/NoCloud/recording.wav', 'https://singbetter.herokuapp.com/teenSpirit', options, true)
+   .then((data) => {
+    this.accuracy = data.response;
+   }, (err) => {
+     // error
+   })
+}
+
+else if(this.title == 'ABC'){
+  fileTransfer.upload('cdvfile://localhost/persistent/../Library/NoCloud/recording.wav', 'https://singbetter.herokuapp.com/abc', options, true)
+   .then((data) => {
+    this.accuracy = data.response;
+   }, (err) => {
+     // error
+   })
+}
 }
 
 

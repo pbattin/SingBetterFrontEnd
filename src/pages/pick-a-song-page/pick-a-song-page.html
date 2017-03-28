@@ -6,11 +6,11 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title><img src="../assets/kirby.gif"/>Pick a Song!</ion-title>
+    <ion-title><img height="40" src="assets/kirby.gif"/>Pick a Song!</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 <ion-list>
 <ion-item *ngFor = "let song of songArray">
    <button ion-button [clear]="true" (click) ="startSong(song)">
