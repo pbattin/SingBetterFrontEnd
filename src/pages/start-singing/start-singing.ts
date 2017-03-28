@@ -3,7 +3,9 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import {ResultsPage} from '../pages/results/results';
 import { MediaPlugin } from 'ionic-native';
 import {Platform} from "ionic-angular/index";
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
+import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
+import { File } from '@ionic-native/file';
 
 /*
   Generated class for the StartSinging page.
@@ -13,20 +15,42 @@ import { Http } from '@angular/http';
 */
 @Component({
   selector: 'page-start-singing',
-  templateUrl: 'start-singing.html'
+  templateUrl: 'start-singing.html',
+  providers: [File, Transfer]
 })
 export class StartSingingPage {
- 
+ notes: any = 1;
  media: MediaPlugin; 
- title: string
+ title: string;
 
-  constructor(public http: Http,public alertCtrl: AlertController,public platform: Platform,public navCtrl: NavController, public navParams: NavParams) {
+ 
+
+  constructor(public file: File,private transfer: Transfer,public http: Http,public alertCtrl: AlertController,public platform: Platform,public navCtrl: NavController, public navParams: NavParams) {
    this.title  = this.navParams.get('title');}
 
   ionViewDidLoad() {}
   ionViewDidEnter(){
     this.media = new MediaPlugin('../Library/NoCloud/recording.wav');
   }
+
+upload() {
+  const fileTransfer: TransferObject = this.transfer.create();
+  let options: FileUploadOptions = {
+     fileKey: 'file',
+     fileName: 'recording.wav',
+      mimeType: "multipart/form-data",
+     headers: {}
+     
+  }
+
+  fileTransfer.upload('cdvfile://localhost/persistent/../Library/NoCloud/recording.wav', 'https://singbetter.herokuapp.com/uploadFile', options, true)
+   .then((data) => {
+    this.notes = data.response;
+   }, (err) => {
+     // error
+   })
+}
+
 
   showAlert(message) {
   let alert = this.alertCtrl.create({
@@ -37,7 +61,7 @@ export class StartSingingPage {
   alert.present();
 }
 
-//../assets/Dio.wav
+
 startRecording(){
   try {
     this.media.startRecord();

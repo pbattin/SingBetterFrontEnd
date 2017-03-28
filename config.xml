@@ -42,4 +42,5 @@
         <param name="ios-package" value="CDVWKWebViewEngine" />
     </feature>
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+    <plugin name="cordova-plugin-file" spec="~4.3.2" />
 </widget>
